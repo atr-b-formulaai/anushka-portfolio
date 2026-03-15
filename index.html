@@ -1,208 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anushka Banerjee | Creative Strategist & Copywriter</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        ink: '#0F0F0F',
+                        paper: '#F9F8F6',
+                        accent: '#FF4500',
+                        beige: '#E8E1D9'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; scroll-behavior: smooth; }
-        .modal { display: none; background-color: rgba(0,0,0,0.85); z-index: 1000; backdrop-filter: blur(5px); }
-        .modal.active { display: flex; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .brand-card:hover { transform: translateY(-5px); transition: all 0.3s; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); color: #FF4500; }
+        body { font-family: 'Outfit', sans-serif; background-color: theme('colors.paper'); color: theme('colors.ink'); }
+        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Smooth reveal animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* Hero Parallax */
         .hero-bg {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), url('assets/hero.jpg');
+            background-image: linear-gradient(to bottom, rgba(15, 15, 15, 0.3), rgba(15, 15, 15, 0.8)), url('assets/hero.jpg');
             background-size: cover;
-            background-position: center;
+            background-position: center 20%;
+            background-attachment: fixed;
         }
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(90deg, #FF4500, #ff8c00);
-        }
+
+        /* Card Hover Effects */
+        .project-card { transition: all 0.4s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: rgba(255, 69, 0, 0.2); }
+        .project-card:hover .project-title { color: theme('colors.accent'); }
+        
+        .brand-pill { transition: all 0.3s ease; }
+        .brand-pill:hover { background-color: theme('colors.ink'); color: theme('colors.paper'); transform: scale(1.05); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.paper'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.ink'); border-radius: 10px; }
+        
+        /* Modals */
+        .modal { display: none; background-color: rgba(15,15,15,0.95); z-index: 1000; backdrop-filter: blur(8px); }
+        .modal.active { display: flex; animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body class="bg-[#F8F9FA] text-gray-900">
+<body class="antialiased selection:bg-accent selection:text-white">
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-paper/90 backdrop-blur-md border-b border-ink/5" id="navbar">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <a href="#" class="text-2xl font-black tracking-tighter">AB<span class="text-[#FF4500]">.</span></a>
-                <div class="space-x-10 hidden md:flex font-medium text-sm tracking-wide uppercase">
-                    <a href="#about" class="text-gray-500 hover:text-black transition-colors">About</a>
-                    <a href="#work" class="text-gray-500 hover:text-black transition-colors">Work</a>
-                    <a href="#brands" class="text-gray-500 hover:text-black transition-colors">Brands</a>
-                    <a href="#contact" class="text-gray-500 hover:text-black transition-colors">Contact</a>
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="text-3xl font-serif font-bold tracking-tighter text-ink">AB<span class="text-accent">.</span></a>
+                <div class="space-x-8 hidden md:flex font-sans font-medium text-sm tracking-widest uppercase text-ink/70">
+                    <a href="#about" class="hover:text-accent transition-colors">About</a>
+                    <a href="#portfolio" class="hover:text-accent transition-colors">Portfolio</a>
+                    <a href="#brands" class="hover:text-accent transition-colors">Brands</a>
+                    <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+                </div>
+                <!-- Mobile Menu Icon -->
+                <div class="md:hidden text-2xl text-ink">
+                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header id="about" class="hero-bg min-h-screen flex items-center justify-center pt-20 px-6">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2 text-left">
-                <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4 leading-none">Anushka<br>Banerjee</h1>
-                <h2 class="text-2xl text-gradient font-bold mb-8 uppercase tracking-widest">Creative Strategist & Copywriter</h2>
-                <p class="text-xl text-gray-700 leading-relaxed mb-10 font-light">
-                    The girl who writes, ideates, strategizes, and makes her living easier by writing copies, taglines, scripts, and loves watching reels while writing them! 
-                </p>
-                <div class="flex gap-4">
-                    <a href="#work" class="bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition shadow-lg hover:shadow-xl hover:-translate-y-1 transform">Explore Work</a>
-                </div>
-            </div>
-            <div class="md:w-1/2 relative group">
-                <div class="absolute inset-0 bg-[#FF4500] rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-6 group-hover:translate-y-6"></div>
-                <img src="assets/portrait.jpg" alt="Anushka Banerjee" class="relative z-10 rounded-2xl shadow-2xl w-full object-cover aspect-[4/5]">
-            </div>
+    <!-- Hero Section -->
+    <header id="about" class="hero-bg min-h-[100svh] flex items-center justify-center relative px-6 text-white pt-20">
+        <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center reveal active">
+            <span class="font-sans tracking-[0.3em] uppercase text-sm md:text-base mb-6 text-white/80">Creative Strategist & Copywriter</span>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-serif font-black mb-8 leading-[0.9] tracking-tight">Anushka<br><span class="italic font-light text-beige">Banerjee</span></h1>
+            <p class="font-sans text-xl md:text-2xl font-light max-w-2xl text-white/90 leading-relaxed mb-12">
+                The girl who writes, ideates, strategizes, and makes her living easier by writing copies, taglines, scripts, and loves watching reels while writing them.
+            </p>
+            <a href="#portfolio" class="font-sans uppercase tracking-widest text-sm font-bold border-b-2 border-accent pb-2 hover:text-accent transition-colors">Explore The Work</a>
         </div>
     </header>
 
-    <!-- Work/Campaigns Section -->
-    <section id="work" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex items-center gap-4 mb-16">
-                <div class="h-1 w-12 bg-[#FF4500]"></div>
-                <h2 class="text-4xl font-black uppercase tracking-widest">Selected Campaigns</h2>
+    <!-- Intro Quote -->
+    <section class="py-20 md:py-32 bg-ink text-paper px-6">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <i class="fas fa-quote-left text-4xl text-accent mb-8 opacity-50"></i>
+            <h2 class="text-3xl md:text-5xl font-serif italic leading-tight mb-8">
+                "If you want to know more, let’s connect for an interview! Hehehe! <3"
+            </h2>
+            <div class="flex items-center justify-center gap-6 mt-12">
+                <img src="assets/portrait.jpg" alt="Anushka" class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-accent p-1">
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Portfolio Section -->
+    <section id="portfolio" class="py-24 md:py-32 bg-paper px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 text-center reveal">
+                <span class="font-sans text-accent tracking-[0.2em] uppercase text-sm font-bold">Selected Works</span>
+                <h2 class="text-5xl md:text-7xl font-serif font-black text-ink mt-4">The Portfolio.</h2>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Campaign 1 -->
-                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal1')">
-                    <div class="h-64 overflow-hidden relative">
-                        <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-300"></div>
+                <!-- 1. Senco -->
+                <div class="project-card bg-white p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col" onclick="openModal('modal-senco')">
+                    <div class="mb-6 h-48 rounded-xl overflow-hidden relative">
+                        <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
                     </div>
-                    <div class="p-8 flex-grow flex flex-col justify-between">
-                        <div>
-                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Senco Gold & Diamonds</span>
-                            <h3 class="text-2xl font-black mt-3 mb-4">Everlite Collections</h3>
-                            <p class="text-gray-600 line-clamp-3 font-light">Launched Zodiac, Ombre, Nayiraah, and 9KT Gold collections with complete campaign strategies and DVCs.</p>
-                        </div>
-                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
-                            View Case Study <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
-                        </button>
-                    </div>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">Jewelry & Fashion</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4">Everlite By Senco</h3>
+                    <p class="text-ink/70 font-light leading-relaxed flex-grow">Launched Zodiac, Ombre, Nayiraah, 9KT Gold. Handled end-to-end campaign strategies, DVCs, 3D/AI films, and daily hygiene content.</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-ink/10 pb-2 inline-block">Read Case Study <i class="fas fa-arrow-right ml-2 text-accent"></i></div>
                 </div>
 
-                <!-- Campaign 2 -->
-                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal2')">
-                    <div class="h-64 bg-black flex items-center justify-center relative overflow-hidden">
-                        <i class="fab fa-twitter text-6xl text-white/20 absolute -right-4 -bottom-4 transform rotate-12"></i>
-                        <h4 class="text-white text-3xl font-black relative z-10">#BIGGBOSS</h4>
+                <!-- 2. Excel Home Decor -->
+                <div class="project-card bg-white p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col" onclick="openModal('modal-excel')">
+                    <div class="mb-6 h-48 rounded-xl overflow-hidden bg-beige flex items-center justify-center">
+                        <i class="fas fa-couch text-5xl text-ink/20 transform -rotate-12 group-hover:scale-110 transition duration-700"></i>
                     </div>
-                    <div class="p-8 flex-grow flex flex-col justify-between">
-                        <div>
-                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Colors TV</span>
-                            <h3 class="text-2xl font-black mt-3 mb-4">Bigg Boss Social</h3>
-                            <p class="text-gray-600 line-clamp-3 font-light">"Yeh King aur Queen wala tweet doc bana do jaldi se" - Weekly engagement strategies and viral tweets.</p>
-                        </div>
-                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
-                            View Details <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
-                        </button>
-                    </div>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">Interior & Lifestyle</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4">Excel Home Decor</h3>
+                    <p class="text-ink/70 font-light leading-relaxed flex-grow">Curated campaigns for Homefest & Naya Ghar Nayi Shuruat (like Flipkart's BBD). Managed UGCs, snackible content, influencers, and AI film voiceovers.</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-ink/10 pb-2 inline-block">Read Case Study <i class="fas fa-arrow-right ml-2 text-accent"></i></div>
                 </div>
 
-                <!-- Campaign 3 -->
-                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal3')">
-                    <div class="h-64 bg-gray-200 flex items-center justify-center relative overflow-hidden">
-                        <i class="fas fa-pen-nib text-6xl text-gray-400 absolute opacity-20 transform -rotate-12 scale-150"></i>
-                        <h4 class="text-gray-800 text-2xl font-black italic relative z-10 font-serif">"Poet toh hum..."</h4>
+                <!-- 3. HUL Scripts -->
+                <div class="project-card bg-ink text-paper p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col" onclick="openModal('modal-hul')">
+                    <div class="mb-6">
+                        <i class="fas fa-video text-4xl text-accent mb-4"></i>
+                        <div class="text-xl font-serif italic text-paper/70">"Just a script bro, make it conversational, jaise you talk to your mom."</div>
                     </div>
-                    <div class="p-8 flex-grow flex flex-col justify-between">
-                        <div>
-                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Personal</span>
-                            <h3 class="text-2xl font-black mt-3 mb-4">Poetry Anthology</h3>
-                            <p class="text-gray-600 line-clamp-3 font-light">"Poet toh hum bachpan se hain!" Published poetry available on Amazon.</p>
-                        </div>
-                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
-                            Read More <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
-                        </button>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">FMCG & Beauty</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4 text-paper">HUL Creative Strategy</h3>
+                    <p class="text-paper/70 font-light leading-relaxed flex-grow">Worked with Pond's, Dove, Vaseline, Lakmé. Conceptualized video scripts, handled on-set filming supervision, and post-production.</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-paper/20 pb-2 inline-block group-hover:text-accent">Read Details <i class="fas fa-arrow-right ml-2"></i></div>
+                </div>
+
+                <!-- 4. Colors TV -->
+                <div class="project-card bg-white p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col" onclick="openModal('modal-colors')">
+                    <div class="mb-6 border-l-4 border-accent pl-4">
+                        <div class="text-lg font-serif italic text-ink/70">"Jaldi jaldi briefs khatam karle, shoot doc aur deck bhi banana hai!"</div>
                     </div>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">Entertainment / TV</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4">Colors TV Launches</h3>
+                    <p class="text-ink/70 font-light leading-relaxed flex-grow">Drafted briefs, promotional shoot docs, one-liners, and trending concepts for shows like Suman Indori, Durga, Pati Patni Aur Baby.</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-ink/10 pb-2 inline-block">View Projects <i class="fas fa-arrow-right ml-2 text-accent"></i></div>
+                </div>
+
+                <!-- 5. Digital Copies & Memes -->
+                <div class="project-card bg-white p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col" onclick="openModal('modal-copies')">
+                    <div class="mb-6 border-l-4 border-accent pl-4">
+                        <div class="text-lg font-serif italic text-ink/70">"Kya yaar ek line hi toh likhni hain 2 mins main likh ke de na!"</div>
+                    </div>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">Social & F&B</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4">Digital Copywriting</h3>
+                    <p class="text-ink/70 font-light leading-relaxed flex-grow">Subtle and relatable copy for Wow Momo, Wow China, Flair Pens, West Bengal Police, Rare Planet. "Copy is something I breathe and eat."</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-ink/10 pb-2 inline-block">Read More <i class="fas fa-arrow-right ml-2 text-accent"></i></div>
+                </div>
+
+                <!-- 6. Bigg Boss & Rohto -->
+                <div class="project-card bg-white p-8 md:p-10 rounded-2xl reveal cursor-pointer group flex flex-col lg:col-span-1 md:col-span-2" onclick="openModal('modal-social')">
+                    <div class="flex gap-4 mb-6">
+                        <div class="bg-blue-50 text-blue-500 p-4 rounded-full"><i class="fab fa-twitter text-2xl"></i></div>
+                        <div class="bg-pink-50 text-pink-500 p-4 rounded-full"><i class="fas fa-leaf text-2xl"></i></div>
+                    </div>
+                    <span class="text-accent text-xs font-bold uppercase tracking-widest mb-3 block">Social Media Strategy</span>
+                    <h3 class="project-title text-3xl font-serif font-bold mb-4">Bigg Boss & Rohto Skincare</h3>
+                    <p class="text-ink/70 font-light leading-relaxed flex-grow">From crafting the "King aur Queen" weekly viral tweet docs for Bigg Boss fandoms, to launching Japanese skincare brand Rohto in India with targeted social hygiene content.</p>
+                    <div class="mt-8 font-sans text-sm font-bold tracking-widest uppercase border-b border-ink/10 pb-2 inline-block">View Strategy <i class="fas fa-arrow-right ml-2 text-accent"></i></div>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <!-- Brands Grid -->
-    <section id="brands" class="py-32 bg-black text-white">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-black mb-16 uppercase tracking-widest">Brands I've Crafted For</h2>
-            <div class="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Lakme</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Pond’s</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Vaseline</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Colors TV</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Mcaffeine</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Future Generali</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Bharti Axa</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">West Bengal Police</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Wow Momo</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Wow China</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Everlite By Senco</span>
-                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Rare Planet</span>
+    <!-- Brands Marquee / Grid -->
+    <section id="brands" class="py-24 bg-ink text-paper border-t border-paper/10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 text-center reveal">
+            <h2 class="text-xs font-sans tracking-[0.3em] uppercase mb-12 text-paper/50">Brands I've Breathed Life Into</h2>
+            <div class="flex flex-wrap justify-center gap-3 md:gap-5 max-w-5xl mx-auto">
+                <!-- Using pills for brands -->
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Lakmé</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Pond’s</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Vaseline</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Colors TV</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Mcaffeine</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Future Generali</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Bharti Axa</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">West Bengal Police</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Wow Momo</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Wow China</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Flair Pens</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Hauser</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Pierre Cardin</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Seiko</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Everlite By Senco</span>
+                <span class="brand-pill border border-paper/20 rounded-full px-6 py-3 font-sans font-medium text-sm tracking-wide bg-white/5 backdrop-blur cursor-default">Rare Planet</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emailers & Poetry (Text focus) -->
+    <section class="py-24 bg-beige text-ink px-6">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 reveal">
+            <div>
+                <h3 class="text-4xl font-serif font-bold mb-6">Financial Emailers</h3>
+                <p class="font-serif italic text-xl text-ink/70 mb-6 border-l-2 border-accent pl-4">"Just an emailer Anushka, kya itna soch rahi hain, doesnt even take 5 mins! Yeh de de mujhe phir aur 2 dozen briefs bhejti hoon!"</p>
+                <p class="font-light leading-relaxed">I have worked with brands like AU bank, Future Generali, and Bharti AXA. I closely worked with the account management team to get the briefing, understand the financial policies I was writing for, and deeply studied the Target Group to ensure maximum open/click rates.</p>
+            </div>
+            <div>
+                <h3 class="text-4xl font-serif font-bold mb-6">Published Poetry</h3>
+                <p class="font-serif italic text-xl text-ink/70 mb-6 border-l-2 border-accent pl-4">"Poet toh hum bachpan se hain!"</p>
+                <p class="font-light leading-relaxed">I shared one of my poems with a publisher planning an anthology. It was finally published and it's still available on Amazon. Also, this was written way back, so I'm completely open to creative criticism (Read: Getting judged)!</p>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-32 bg-[#FF4500] text-white text-center">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">Let's Create Together</h2>
-            <p class="text-2xl text-white/90 mb-12 italic font-light">"Thank you isn't enough... instead let's work as a team and write some kickass content, shall we?!"</p>
-            <a href="mailto:hello@example.com" class="inline-block bg-white text-[#FF4500] px-12 py-5 rounded-full text-xl font-black hover:bg-black hover:text-white transition shadow-2xl hover:scale-105 transform duration-300">Hire Me</a>
+    <section id="contact" class="py-32 bg-paper text-ink px-6 text-center">
+        <div class="max-w-4xl mx-auto reveal">
+            <h2 class="text-6xl md:text-8xl font-serif font-black mb-10 tracking-tight">Let's Create<br><span class="text-accent italic font-light">Together.</span></h2>
+            <p class="text-2xl font-serif text-ink/70 mb-12 italic">"Thank you isn't enough... instead let's work as a team and write some kickass content, shall we?!"</p>
+            <a href="mailto:hello@example.com" class="inline-block bg-ink text-paper px-12 py-5 rounded-full text-sm tracking-widest uppercase font-bold hover:bg-accent transition duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-2 transform">Start a Conversation</a>
         </div>
     </section>
 
-    <!-- Modals -->
-    <div id="modal1" class="modal fixed inset-0 items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative shadow-2xl flex flex-col md:flex-row">
-            <button onclick="closeModal('modal1')" class="absolute top-4 right-6 text-white md:text-gray-500 hover:text-black text-4xl z-50 mix-blend-difference">&times;</button>
-            <div class="md:w-1/2 h-64 md:h-auto">
-                <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover">
+    <footer class="py-8 bg-ink text-paper/50 text-center text-sm font-sans tracking-widest uppercase border-t border-paper/10">
+        &copy; 2026 Anushka Banerjee. All Rights Reserved.
+    </footer>
+
+    <!-- Modals (Expanded Content from PDF) -->
+    
+    <!-- Modal: Senco -->
+    <div id="modal-senco" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative flex flex-col md:flex-row shadow-2xl">
+            <button onclick="closeModal('modal-senco')" class="absolute top-4 right-6 text-white md:text-ink/50 hover:text-accent text-4xl z-50 mix-blend-difference md:mix-blend-normal">&times;</button>
+            <div class="md:w-5/12 h-64 md:h-auto bg-ink relative">
+                <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover opacity-90">
             </div>
-            <div class="p-10 md:w-1/2 overflow-y-auto bg-[#F8F9FA]">
-                <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Case Study</span>
-                <h3 class="text-4xl font-black mt-2 mb-6">Everlite By Senco</h3>
-                <p class="text-gray-600 text-lg leading-relaxed mb-8 font-light">
-                    Everlite by Senco is a sub brand of Senco Gold and Diamonds. I have launched several collections such as Zodiac, Ombre, Nayiraah, 9KT Gold. Along with that I have actively curated, strategised and written campaigns, which includes Valentine’s day, Mother’s Day, Women’s Day, Festive campaign too. It includes DVCs and social amplification. From developing the insight to the final execution script.
+            <div class="p-8 md:p-12 md:w-7/12 overflow-y-auto">
+                <span class="text-accent font-bold uppercase tracking-widest text-xs">Campaign Strategy & Copy</span>
+                <h3 class="text-4xl font-serif font-black mt-3 mb-6">Everlite By Senco</h3>
+                <p class="text-ink/80 font-light text-lg leading-relaxed mb-6">
+                    Everlite by Senco is a sub brand of Senco Gold and Diamonds. I have launched several collections such as, <strong class="font-medium text-ink">Zodiac, Ombre, Nayiraah, 9KT Gold.</strong>
+                </p>
+                <p class="text-ink/80 font-light text-lg leading-relaxed mb-6">
+                    Along with that I have actively curated, strategised and written campaigns, which includes, Valentine’s day, Mother’s Day, Women’s Day, Festive campaign too. It includes DVCs and social amplification.
+                </p>
+                <p class="text-ink/80 font-light text-lg leading-relaxed mb-6 border-l-2 border-accent pl-4 italic">
+                    From developing the insight to writing the scripts, I have been a part of every bit. It includes 3D, AI film as well as shoot based DVC.
+                </p>
+                <p class="text-ink/80 font-light text-lg leading-relaxed">
+                    Apart from campaigns, I also make daily hygiene content for them.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Modal 2 & 3 hidden for brevity, same as before but styled -->
-    <div id="modal2" class="modal fixed inset-0 items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-12">
-            <button onclick="closeModal('modal2')" class="absolute top-6 right-8 text-gray-400 hover:text-black text-4xl">&times;</button>
-            <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Social Strategy</span>
-            <h3 class="text-4xl font-black mt-2 mb-6">Bigg Boss Social</h3>
-            <h4 class="text-2xl font-bold mb-6 text-gray-800">“Yeh King aur Queen wala tweet doc bana do jaldi se”</h4>
-            <p class="text-gray-600 text-lg leading-relaxed mb-6 font-light">
-                Every week we have separate tweet docs for the Bigg Boss contestants. Managing the real-time social sentiment, creating viral hooks, and maintaining the highly engaged fandoms for one of India's biggest reality shows.
+    <!-- Modal: Excel -->
+    <div id="modal-excel" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8 md:p-16 shadow-2xl text-center">
+            <button onclick="closeModal('modal-excel')" class="absolute top-6 right-8 text-ink/50 hover:text-accent text-4xl">&times;</button>
+            <i class="fas fa-couch text-6xl text-accent/20 mb-6"></i>
+            <h3 class="text-4xl font-serif font-black mb-8 text-ink">Excel Home Decor</h3>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6 text-left">
+                Excel is a home decor brand which has been in the business of wallpapers, flooring and upholstery, for the last 25 years. I have launched several collections including, Essen, Inkraft, Artisan, etc.
+            </p>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6 text-left">
+                For campaigns I have worked on their IPs - <strong class="font-medium">Homefest & Naya Ghar Nayi Shuruat</strong>. It is basically like Flipkart’s Big Billion Day Sale. From UGCs to snackible content and influencer collaboration, I have curated all. 
+            </p>
+            <p class="text-ink/80 font-light text-xl leading-relaxed text-left border-l-2 border-accent pl-4 italic">
+                Recently I have also scripted and given voice over for 2 AI films for wallpapers and furnishing. Apart from campaigns, I curate social hygiene posts for them as well.
             </p>
         </div>
     </div>
 
-    <div id="modal3" class="modal fixed inset-0 items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-12">
-            <button onclick="closeModal('modal3')" class="absolute top-6 right-8 text-gray-400 hover:text-black text-4xl">&times;</button>
-            <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Personal Work</span>
-            <h3 class="text-4xl font-black mt-2 mb-6">Poetry Publication</h3>
-            <h4 class="text-2xl font-bold mb-6 text-gray-800">“Poet toh hum bachpan se hain!“</h4>
-            <p class="text-gray-600 text-lg leading-relaxed mb-6 font-light">
-                I had shared one of my poems to a publisher who was planning for an anthology. It was finally published and it’s still available on Amazon. Also, this was written way back, so I’m open to creative criticism (Read: Getting judged)!
+    <!-- Modal: HUL Scripts -->
+    <div id="modal-hul" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8 md:p-16 shadow-2xl">
+            <button onclick="closeModal('modal-hul')" class="absolute top-6 right-8 text-ink/50 hover:text-accent text-4xl">&times;</button>
+            <span class="text-accent font-bold uppercase tracking-widest text-xs">Script Writing / Creative Strategy</span>
+            <h3 class="text-4xl font-serif font-black mt-3 mb-6 text-ink">HUL Brands (Pond's, Dove, Vaseline, Lakmé)</h3>
+            <h4 class="text-2xl font-serif italic text-ink/70 mb-8 pb-6 border-b border-ink/10">"Just a script bro, make it conversational, jaise you talk to your mom. Simple!"</h4>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6">
+                I have worked as a creative strategist for HUL brands, majorly with Pond’s. Other than that I have also worked with Dove, Vaseline and Lakmé. From ideation to execution, Banerjee has done it all.
+            </p>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6">
+                Being a part of the creative team I have also conceptualized and written video scripts for influencers/actors. 
+            </p>
+            <p class="text-ink/80 font-light text-xl leading-relaxed border-l-2 border-accent pl-4 italic">
+                Apart from writing scripts, your girl has also handled the filming aspect, as in being on the shooting floor in person to make the outcome easier and match the brand’s standard. Oh yes, I was involved in the post-production too!
             </p>
         </div>
     </div>
 
+    <!-- Modal: Colors TV -->
+    <div id="modal-colors" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8 md:p-16 shadow-2xl">
+            <button onclick="closeModal('modal-colors')" class="absolute top-6 right-8 text-ink/50 hover:text-accent text-4xl">&times;</button>
+            <span class="text-accent font-bold uppercase tracking-widest text-xs">Launch Creatives & Briefs</span>
+            <h3 class="text-4xl font-serif font-black mt-3 mb-6 text-ink">Show Launch for Colors TV</h3>
+            <h4 class="text-2xl font-serif italic text-ink/70 mb-8 pb-6 border-b border-ink/10">"Jaldi jaldi briefs khatam karle, shoot doc aur deck bhi banana hai!"</h4>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-8">
+                I draft briefs for fictional as well as reality shows. It includes social media posts, topicals and YouTube titles. It also includes shoot docs and creative decks.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-ink/5">
+                    <h5 class="font-serif font-bold text-xl mb-2">Suman Indori & Durga</h5>
+                    <p class="text-sm font-light leading-relaxed">Prepared the promotional shoot doc, including one liners, trending concepts and action shots. Supervised and coordinated the shoot.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-ink/5">
+                    <h5 class="font-serif font-bold text-xl mb-2">Pati Patni Aur Baby & Apollena</h5>
+                    <p class="text-sm font-light leading-relaxed">Prepared the promotional shoot docs. Included trending concepts, one-liners and detailed action shots.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Copies -->
+    <div id="modal-copies" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8 md:p-16 shadow-2xl">
+            <button onclick="closeModal('modal-copies')" class="absolute top-6 right-8 text-ink/50 hover:text-accent text-4xl">&times;</button>
+            <span class="text-accent font-bold uppercase tracking-widest text-xs">Digital Copies</span>
+            <h3 class="text-4xl font-serif font-black mt-3 mb-6 text-ink">Copywriting & Memes</h3>
+            <h4 class="text-2xl font-serif italic text-ink/70 mb-8 pb-6 border-b border-ink/10">"Kya yaar ek line hi toh likhni hain 2 mins main likh ke de na!"</h4>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6">
+                To whoever’s reading or seeing this, you’re in for a mixed bag of social media copies, descriptive copies (captions) and memes. <strong class="font-medium">Copy is something I breathe and eat.</strong> I love the process of writing a good copy. 
+            </p>
+            <p class="text-ink/80 font-light text-xl leading-relaxed mb-6 border-l-2 border-accent pl-4 italic">
+                Having said that, “GOOD” copy is subjective. For me it means something that is subtle and relatable. Teer thodi na marna hain, itni si baat hain ki aisa copy lIkhna hain ki 4 se zyaada log bole “Niceeeee! Kya sochke likha hain! Too good, too good!”
+            </p>
+            <div class="mt-8 flex flex-wrap gap-2">
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">Wow Momo</span>
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">Wow China</span>
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">Flair Pens</span>
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">West Bengal Police</span>
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">Pierre Cardin</span>
+                <span class="text-xs bg-ink text-white px-3 py-1 rounded-full">The Drunken Chicken</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Social (Bigg Boss & Rohto) -->
+    <div id="modal-social" class="modal fixed inset-0 items-center justify-center p-4 md:p-10">
+        <div class="bg-paper rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-8 md:p-16 shadow-2xl">
+            <button onclick="closeModal('modal-social')" class="absolute top-6 right-8 text-ink/50 hover:text-accent text-4xl">&times;</button>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <i class="fab fa-twitter text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-3xl font-serif font-black mb-4 text-ink">Bigg Boss</h3>
+                    <h4 class="text-lg font-serif italic text-ink/70 mb-4">"Yeh King aur Queen wala tweet doc bana do jaldi se"</h4>
+                    <p class="text-ink/80 font-light text-lg leading-relaxed">
+                        Every week we have separate tweet doc for the Bigg Boss contestants. Curating viral hooks, tapping into the reality TV fandoms, and generating massive engagement metrics on Twitter for Colors TV.
+                    </p>
+                </div>
+                <div>
+                    <i class="fas fa-leaf text-4xl text-green-500 mb-4"></i>
+                    <h3 class="text-3xl font-serif font-black mb-4 text-ink">Rohto Skincare</h3>
+                    <p class="text-ink/80 font-light text-lg leading-relaxed">
+                        Rohto is a Japanese skincare brand which has a great presence in Vietnam and recently we launched it in India. Currently we are focusing on socials and hygiene posts, establishing the brand voice and aesthetic for the Indian market!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts for Interactivity -->
     <script>
+        // Scroll Animation Reveal
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+
+        // Modals
         function openModal(id) {
             document.getElementById(id).classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -217,6 +414,18 @@
                 document.body.style.overflow = 'auto';
             }
         }
+
+        // Mobile Nav Color Change on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm', 'bg-paper/90');
+                nav.classList.remove('bg-transparent', 'border-transparent');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.add('border-ink/5');
+            }
+        });
     </script>
 </body>
 </html>
