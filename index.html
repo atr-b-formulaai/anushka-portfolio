@@ -7,86 +7,122 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Helvetica Neue', sans-serif; scroll-behavior: smooth; }
-        .modal { display: none; background-color: rgba(0,0,0,0.8); z-index: 1000; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; scroll-behavior: smooth; }
+        .modal { display: none; background-color: rgba(0,0,0,0.85); z-index: 1000; backdrop-filter: blur(5px); }
         .modal.active { display: flex; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .brand-card:hover { transform: translateY(-5px); transition: all 0.3s; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); color: #FF4500; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), url('assets/hero.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #FF4500, #ff8c00);
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-[#F8F9FA] text-gray-900">
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur shadow-sm z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="#" class="text-xl font-bold tracking-tighter">AB.</a>
-                <div class="space-x-8 hidden md:flex">
-                    <a href="#about" class="text-gray-600 hover:text-black">About</a>
-                    <a href="#work" class="text-gray-600 hover:text-black">Campaigns</a>
-                    <a href="#brands" class="text-gray-600 hover:text-black">Brands</a>
-                    <a href="#contact" class="text-gray-600 hover:text-black">Contact</a>
+    <nav class="fixed w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="#" class="text-2xl font-black tracking-tighter">AB<span class="text-[#FF4500]">.</span></a>
+                <div class="space-x-10 hidden md:flex font-medium text-sm tracking-wide uppercase">
+                    <a href="#about" class="text-gray-500 hover:text-black transition-colors">About</a>
+                    <a href="#work" class="text-gray-500 hover:text-black transition-colors">Work</a>
+                    <a href="#brands" class="text-gray-500 hover:text-black transition-colors">Brands</a>
+                    <a href="#contact" class="text-gray-500 hover:text-black transition-colors">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
-    <header id="about" class="pt-32 pb-20 px-4 max-w-4xl mx-auto text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">Anushka Banerjee</h1>
-        <h2 class="text-2xl text-[#FF4500] font-medium mb-8">Creative Strategist & Copywriter</h2>
-        <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-10 max-w-2xl mx-auto">
-            The girl who writes, ideates, strategizes, and makes her living easier by writing copies, taglines, scripts, and loves watching reels while writing them! 
-        </p>
-        <div class="flex justify-center gap-4">
-            <a href="#work" class="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition">View My Work</a>
-            <a href="#contact" class="bg-white text-black border border-black px-8 py-3 rounded-full hover:bg-gray-50 transition">Let's Talk</a>
+    <header id="about" class="hero-bg min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 text-left">
+                <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4 leading-none">Anushka<br>Banerjee</h1>
+                <h2 class="text-2xl text-gradient font-bold mb-8 uppercase tracking-widest">Creative Strategist & Copywriter</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-10 font-light">
+                    The girl who writes, ideates, strategizes, and makes her living easier by writing copies, taglines, scripts, and loves watching reels while writing them! 
+                </p>
+                <div class="flex gap-4">
+                    <a href="#work" class="bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition shadow-lg hover:shadow-xl hover:-translate-y-1 transform">Explore Work</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative group">
+                <div class="absolute inset-0 bg-[#FF4500] rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-6 group-hover:translate-y-6"></div>
+                <img src="assets/portrait.jpg" alt="Anushka Banerjee" class="relative z-10 rounded-2xl shadow-2xl w-full object-cover aspect-[4/5]">
+            </div>
         </div>
     </header>
 
     <!-- Work/Campaigns Section -->
-    <section id="work" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center uppercase tracking-widest">Selected Campaigns</h2>
+    <section id="work" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center gap-4 mb-16">
+                <div class="h-1 w-12 bg-[#FF4500]"></div>
+                <h2 class="text-4xl font-black uppercase tracking-widest">Selected Campaigns</h2>
+            </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
                 
                 <!-- Campaign 1 -->
-                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow hover:shadow-xl transition cursor-pointer" onclick="openModal('modal1')">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-                        <i class="fas fa-gem text-4xl"></i>
+                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal1')">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-300"></div>
                     </div>
-                    <div class="p-6">
-                        <span class="text-[#FF4500] text-sm font-bold uppercase tracking-wider">Senco Gold & Diamonds</span>
-                        <h3 class="text-xl font-bold mt-2 mb-3">Everlite Collections</h3>
-                        <p class="text-gray-600 line-clamp-3">Launched Zodiac, Ombre, Nayiraah, and 9KT Gold collections with complete campaign strategies and DVCs.</p>
-                        <button class="mt-4 text-black font-semibold hover:text-[#FF4500]">View Case Study &rarr;</button>
+                    <div class="p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Senco Gold & Diamonds</span>
+                            <h3 class="text-2xl font-black mt-3 mb-4">Everlite Collections</h3>
+                            <p class="text-gray-600 line-clamp-3 font-light">Launched Zodiac, Ombre, Nayiraah, and 9KT Gold collections with complete campaign strategies and DVCs.</p>
+                        </div>
+                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
+                            View Case Study <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Campaign 2 -->
-                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow hover:shadow-xl transition cursor-pointer" onclick="openModal('modal2')">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-                        <i class="fab fa-twitter text-4xl"></i>
+                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal2')">
+                    <div class="h-64 bg-black flex items-center justify-center relative overflow-hidden">
+                        <i class="fab fa-twitter text-6xl text-white/20 absolute -right-4 -bottom-4 transform rotate-12"></i>
+                        <h4 class="text-white text-3xl font-black relative z-10">#BIGGBOSS</h4>
                     </div>
-                    <div class="p-6">
-                        <span class="text-[#FF4500] text-sm font-bold uppercase tracking-wider">Colors TV</span>
-                        <h3 class="text-xl font-bold mt-2 mb-3">Bigg Boss Social</h3>
-                        <p class="text-gray-600 line-clamp-3">"Yeh King aur Queen wala tweet doc bana do jaldi se" - Weekly engagement strategies and viral tweets.</p>
-                        <button class="mt-4 text-black font-semibold hover:text-[#FF4500]">View Details &rarr;</button>
+                    <div class="p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Colors TV</span>
+                            <h3 class="text-2xl font-black mt-3 mb-4">Bigg Boss Social</h3>
+                            <p class="text-gray-600 line-clamp-3 font-light">"Yeh King aur Queen wala tweet doc bana do jaldi se" - Weekly engagement strategies and viral tweets.</p>
+                        </div>
+                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
+                            View Details <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Campaign 3 -->
-                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow hover:shadow-xl transition cursor-pointer" onclick="openModal('modal3')">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-                        <i class="fas fa-book-open text-4xl"></i>
+                <div class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gray-50 flex flex-col" onclick="openModal('modal3')">
+                    <div class="h-64 bg-gray-200 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-pen-nib text-6xl text-gray-400 absolute opacity-20 transform -rotate-12 scale-150"></i>
+                        <h4 class="text-gray-800 text-2xl font-black italic relative z-10 font-serif">"Poet toh hum..."</h4>
                     </div>
-                    <div class="p-6">
-                        <span class="text-[#FF4500] text-sm font-bold uppercase tracking-wider">Personal Publication</span>
-                        <h3 class="text-xl font-bold mt-2 mb-3">Poetry Anthology</h3>
-                        <p class="text-gray-600 line-clamp-3">"Poet toh hum bachpan se hain!" Published poetry available on Amazon.</p>
-                        <button class="mt-4 text-black font-semibold hover:text-[#FF4500]">Read More &rarr;</button>
+                    <div class="p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-[#FF4500] text-xs font-black uppercase tracking-widest">Personal</span>
+                            <h3 class="text-2xl font-black mt-3 mb-4">Poetry Anthology</h3>
+                            <p class="text-gray-600 line-clamp-3 font-light">"Poet toh hum bachpan se hain!" Published poetry available on Amazon.</p>
+                        </div>
+                        <button class="mt-6 text-black font-bold flex items-center gap-2 group-hover:text-[#FF4500] transition">
+                            Read More <i class="fas fa-arrow-right transform group-hover:translate-x-2 transition"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -95,88 +131,74 @@
     </section>
 
     <!-- Brands Grid -->
-    <section id="brands" class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-12 uppercase tracking-widest">Brands I've Crafted For</h2>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Lakme</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Pond’s</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Vaseline</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Colors TV</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Mcaffeine</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Future Generali</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Bharti Axa</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">West Bengal Police</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Wow Momo</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Wow China</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Flair Pens</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Hauser</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Pierre Cardin</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Seiko</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Everlite By Senco</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Excel Home Decor</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Rohto</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Keo Karpin</span>
-                <span class="brand-card bg-white px-6 py-3 rounded-full shadow-sm font-medium cursor-default">Rare Planet</span>
+    <section id="brands" class="py-32 bg-black text-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-black mb-16 uppercase tracking-widest">Brands I've Crafted For</h2>
+            <div class="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Lakme</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Pond’s</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Vaseline</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Colors TV</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Mcaffeine</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Future Generali</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Bharti Axa</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">West Bengal Police</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Wow Momo</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Wow China</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Everlite By Senco</span>
+                <span class="brand-card bg-white/10 backdrop-blur border border-white/20 px-8 py-4 rounded-full font-bold cursor-default hover:bg-white hover:text-black">Rare Planet</span>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-20 bg-black text-white text-center">
-        <div class="max-w-3xl mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-6">Let's Create Together</h2>
-            <p class="text-xl text-gray-400 mb-8 italic">"Thank you isn't enough... instead let's work as a team and write some kickass content, shall we?!"</p>
-            <a href="mailto:hello@example.com" class="inline-block bg-[#FF4500] text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-[#e03c00] transition">Hire Me</a>
+    <section id="contact" class="py-32 bg-[#FF4500] text-white text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">Let's Create Together</h2>
+            <p class="text-2xl text-white/90 mb-12 italic font-light">"Thank you isn't enough... instead let's work as a team and write some kickass content, shall we?!"</p>
+            <a href="mailto:hello@example.com" class="inline-block bg-white text-[#FF4500] px-12 py-5 rounded-full text-xl font-black hover:bg-black hover:text-white transition shadow-2xl hover:scale-105 transform duration-300">Hire Me</a>
         </div>
     </section>
 
-    <!-- Modals (Functional Interactivity) -->
-    
-    <!-- Modal 1 -->
-    <div id="modal1" class="modal fixed inset-0 items-center justify-center px-4">
-        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative">
-            <button onclick="closeModal('modal1')" class="absolute top-4 right-6 text-gray-500 hover:text-black text-3xl">&times;</button>
-            <div class="p-8">
-                <span class="text-[#FF4500] font-bold uppercase tracking-widest text-sm">Case Study</span>
-                <h3 class="text-3xl font-bold mt-2 mb-4">Everlite By Senco</h3>
-                <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                    Everlite by Senco is a sub brand of Senco Gold and Diamonds. I have launched several collections such as, Zodiac, Ombre, Nayiraah, 9KT Gold. Along with that I have actively curated, strategised and written campaigns, which includes, Valentine’s day, Mother’s Day, Women’s Day, Festive campaign too. It includes DVCs and social amplification. From developing the insight to the final execution script.
-                </p>
-                <div class="bg-gray-100 p-6 rounded-lg italic text-gray-600 border-l-4 border-[#FF4500]">
-                    "Bringing modern flair to traditional craftsmanship through targeted storytelling and digital-first video campaigns."
-                </div>
+    <!-- Modals -->
+    <div id="modal1" class="modal fixed inset-0 items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative shadow-2xl flex flex-col md:flex-row">
+            <button onclick="closeModal('modal1')" class="absolute top-4 right-6 text-white md:text-gray-500 hover:text-black text-4xl z-50 mix-blend-difference">&times;</button>
+            <div class="md:w-1/2 h-64 md:h-auto">
+                <img src="assets/work1.jpg" alt="Senco Campaign" class="w-full h-full object-cover">
             </div>
-        </div>
-    </div>
-
-    <!-- Modal 2 -->
-    <div id="modal2" class="modal fixed inset-0 items-center justify-center px-4">
-        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative">
-            <button onclick="closeModal('modal2')" class="absolute top-4 right-6 text-gray-500 hover:text-black text-3xl">&times;</button>
-            <div class="p-8">
-                <span class="text-[#FF4500] font-bold uppercase tracking-widest text-sm">Social Strategy</span>
-                <h3 class="text-3xl font-bold mt-2 mb-4">Bigg Boss Tweets (Colors TV)</h3>
-                <h4 class="text-xl font-medium mb-4 text-gray-800">“Yeh King aur Queen wala tweet doc bana do jaldi se”</h4>
-                <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                    Every week we have separate tweet docs for the Bigg Boss contestants. Managing the real-time social sentiment, creating viral hooks, and maintaining the highly engaged fandoms for one of India's biggest reality shows.
+            <div class="p-10 md:w-1/2 overflow-y-auto bg-[#F8F9FA]">
+                <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Case Study</span>
+                <h3 class="text-4xl font-black mt-2 mb-6">Everlite By Senco</h3>
+                <p class="text-gray-600 text-lg leading-relaxed mb-8 font-light">
+                    Everlite by Senco is a sub brand of Senco Gold and Diamonds. I have launched several collections such as Zodiac, Ombre, Nayiraah, 9KT Gold. Along with that I have actively curated, strategised and written campaigns, which includes Valentine’s day, Mother’s Day, Women’s Day, Festive campaign too. It includes DVCs and social amplification. From developing the insight to the final execution script.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Modal 3 -->
-    <div id="modal3" class="modal fixed inset-0 items-center justify-center px-4">
-        <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative">
-            <button onclick="closeModal('modal3')" class="absolute top-4 right-6 text-gray-500 hover:text-black text-3xl">&times;</button>
-            <div class="p-8">
-                <span class="text-[#FF4500] font-bold uppercase tracking-widest text-sm">Personal Work</span>
-                <h3 class="text-3xl font-bold mt-2 mb-4">Poetry Publication</h3>
-                <h4 class="text-xl font-medium mb-4 text-gray-800">“Poet toh hum bachpan se hain!“</h4>
-                <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                    I had shared one of my poems to a publisher who was planning for an anthology. It was finally published and it’s still available on Amazon. Also, this was written way back, so I’m open to creative criticism (Read: Getting judged)!
-                </p>
-            </div>
+    <!-- Modal 2 & 3 hidden for brevity, same as before but styled -->
+    <div id="modal2" class="modal fixed inset-0 items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-12">
+            <button onclick="closeModal('modal2')" class="absolute top-6 right-8 text-gray-400 hover:text-black text-4xl">&times;</button>
+            <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Social Strategy</span>
+            <h3 class="text-4xl font-black mt-2 mb-6">Bigg Boss Social</h3>
+            <h4 class="text-2xl font-bold mb-6 text-gray-800">“Yeh King aur Queen wala tweet doc bana do jaldi se”</h4>
+            <p class="text-gray-600 text-lg leading-relaxed mb-6 font-light">
+                Every week we have separate tweet docs for the Bigg Boss contestants. Managing the real-time social sentiment, creating viral hooks, and maintaining the highly engaged fandoms for one of India's biggest reality shows.
+            </p>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal fixed inset-0 items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative p-12">
+            <button onclick="closeModal('modal3')" class="absolute top-6 right-8 text-gray-400 hover:text-black text-4xl">&times;</button>
+            <span class="text-[#FF4500] font-black uppercase tracking-widest text-xs">Personal Work</span>
+            <h3 class="text-4xl font-black mt-2 mb-6">Poetry Publication</h3>
+            <h4 class="text-2xl font-bold mb-6 text-gray-800">“Poet toh hum bachpan se hain!“</h4>
+            <p class="text-gray-600 text-lg leading-relaxed mb-6 font-light">
+                I had shared one of my poems to a publisher who was planning for an anthology. It was finally published and it’s still available on Amazon. Also, this was written way back, so I’m open to creative criticism (Read: Getting judged)!
+            </p>
         </div>
     </div>
 
@@ -189,7 +211,6 @@
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = 'auto';
         }
-        // Close modal on outside click
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('active');
